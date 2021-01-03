@@ -36,16 +36,7 @@ fn main() -> Result<(), RcronError>  {
         epis: vec!(epi, epi2)
     };
 
-     
-    // Standard Mustache action here for mutiple endpoints
-// let source = "{{#epis}}#[{{method}}(\"/{{path}}\")]
-// fn {{path}}() -> &'static str {
-//     \"{{#response}}{{body}}{{/response}}\"
-// }{{/epis}}
-// fn main() {
-//     S
-
-// Standard Mustache action here single endpoints
+    
 
 let source = "
 fn main() {
