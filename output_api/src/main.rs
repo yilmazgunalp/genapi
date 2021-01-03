@@ -4,14 +4,10 @@ mod types;
 use types::{ContentType,Response};
 
 fn main() {
-    genapi_macro::create!(Endpoint {path: "cleanme", method: Method::GET, response: Response {
+    genapi_macro::create!(Endpoint {path: "godeep", method: Method::GET, response: Response {
         content_type: ContentType::TEXT,
-        body: "hulalla"
-    }});
-genapi_macro::create!(Endpoint {path: "merhabalar", method: Method::GET, response: Response {
-        content_type: ContentType::TEXT,
-        body: "dunya dunya"
+        body: "white horse"
     }});
 
-    genapi_macro::ignite!([cleanme,merhabalar,]);
+    genapi_macro::ignite!([godeep,]);
 }

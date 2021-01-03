@@ -6,6 +6,6 @@
 
 2. Write macros to the *main.rs* file of the *output_api*.(This is currently done using rams mustache template)
 
-3.Compile the *output_api* to *output_binary* folder.
+3. Compile the *output_api* to *output_binary* folder.
 
 4. Send the output_binary to client   

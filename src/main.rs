@@ -1,44 +1,32 @@
+
+#![feature(proc_macro_hygiene, decl_macro)]
 mod subcommands;
 use ramhorns::{Template, Content};
-use ramhorns::encoding::Encoder;
+
 use std::ffi::OsString;
+use rocket_contrib::json::Json;
+#[macro_use] extern crate rocket;
+#[macro_use] extern crate serde_derive;
+use rocket::response::NamedFile;
+use rocket::response::status::NotFound;
 
 use subcommands::compile_api;
 use subcommands::{create_tmp_file,RcronError};
 
 
 use::std::io::Write;
-#[allow(unused_imports)]
-fn main() -> Result<(), RcronError>  {
-    
-    let src_path: OsString = OsString::from("/home/yg/ygprojects/genapi/output_api/");
 
-    let epi = Endpoint  {
+#[post("/api/gen", data = "<endpoint>")]
+fn genome(endpoint: Json<Endpoint>) -> Result<NamedFile, RcronError> {
 
-        method: MethodS {method: "geat"},
-        path: "cleanme",
-        response: Response {
-            content_type: ContentType::TEXT,
-            body: "hulalla"
-        }
-    };
-
-    let epi2 = Endpoint  {
-        method: MethodS {method: "poast"},
-        path: "merhabalar",
-        response: Response {
-            content_type: ContentType::TEXT,
-            body: "dunya dunya"
-        }
-    };
 
     let epis: Epis = Epis {
-        epis: vec!(epi, epi2)
+        epis: vec!(endpoint.0)
     };
 
-    
 
-let source = "
+    let src_path: OsString = OsString::from("/home/yg/ygprojects/genapi/output_api/");
+    let source = "
 fn main() {
     {{#epis}}genapi_macro::create!(Endpoint {path: \"{{path}}\", method: Method::GET, response: {{#response}}Response {
         content_type: ContentType::TEXT,
@@ -61,19 +49,27 @@ let imports = vec!("#![feature(proc_macro_hygiene, decl_macro)]\n".as_bytes(), "
     tmp_file.write(&imports[2])?;
     tmp_file.write(&rendered.as_bytes())?;
     compile_api(&src_path);
-Ok(())
+    let path =  OsString::from("/home/yg/ygprojects/genapi/output_binary/hello_world");;
+
+    NamedFile::open(&path).map_err(|e| RcronError::default())
+}
+
+#[allow(unused_imports)]
+fn main()  {       
+
+    rocket::ignite().mount("/", routes![genome]).launch();
 }
 
 type  Met = Method;
 
-#[derive(Debug,Content)] 
+#[derive(Debug,Content,Deserialize)] 
 struct Endpoint<'a> { 
     path: &'a str,
     method: MethodS<'a>,
     response: Response<'a>,
 }
 
-#[derive(Debug,Content)]
+#[derive(Debug,Content,Deserialize)]
 struct Response<'a> {
     content_type: ContentType,
     body: &'a str,
@@ -84,12 +80,12 @@ enum Method {
     GET,
     POST,
 }
-#[derive(Debug,Content)] 
+#[derive(Debug,Content,Deserialize)] 
 struct  MethodS<'a> {
     method: &'a str
 }
 
-#[derive(Debug)]
+#[derive(Debug,Deserialize)]
 enum ContentType {
     JSON,
     TEXT,
