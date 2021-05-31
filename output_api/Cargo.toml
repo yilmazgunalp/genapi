@@ -2,7 +2,20 @@
 name = "hello_world"
 version = "0.0.0"
 publish = false
+edition = "2018"
 
 [dependencies]
-rocket = "0.4.5"
 genapi_macro = { path = "/home/yg/ygprojects/meta_rust/genapi_macro"} 
+rocket = "0.4.7"
+diesel_migrations = "1.4.0"
+diesel = { version = "1.0.0", features = ["postgres","r2d2"] }
+dotenv = "0.15.0"
+serde = { version = "1.0", features = ["derive"] }
+figment = { version = "0.10.3", features = ["toml", "env"] }
+r2d2-diesel = "1.0.0"
+r2d2 = "0.8"
+
+[dependencies.rocket_contrib]
+version = "0.4.7"
+default-features = false
+features = ["json","diesel_postgres_pool"]

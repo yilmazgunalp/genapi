@@ -1,13 +1,15 @@
 #![feature(proc_macro_hygiene, decl_macro)]
-#[macro_use] extern crate rocket;
-mod types;
-use types::{ContentType,Response};
+#[macro_use]
+extern crate rocket;
+#[macro_use]
+extern crate diesel;
+#[macro_use]
+extern crate diesel_migrations;
+
+pub mod db;
+pub mod models;
+pub mod schema;
 
 fn main() {
-    genapi_macro::create!(Endpoint {path: "godeep", method: Method::GET, response: Response {
-        content_type: ContentType::TEXT,
-        body: "white horse"
-    }});
-
-    genapi_macro::ignite!([godeep,]);
+    println!("Hello World")
 }

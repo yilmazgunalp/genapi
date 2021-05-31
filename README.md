@@ -2,7 +2,7 @@
 
 **It creates an API in these steps:**
 
-1. Create an *output_api* directory with cargo.toml which includes *genapi_macro* crate.(This is currently done manually once)
+1. Create an **output_api** directory with *cargo.toml* which includes **genapi_macro** crate.(This is currently done manually once)
 
 2. Write macros to the *main.rs* file of the *output_api*.(This is currently done using rams mustache template)
 

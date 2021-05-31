@@ -1,4 +1,8 @@
 .vscode/
 output_binary/
-output_api/target/
+output_api/*
+!output_api/src
+output_api/src/*
+!output_api/src/db.rs
 target/
+src/workspace.code-workspace
