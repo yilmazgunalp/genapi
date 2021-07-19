@@ -45,6 +45,7 @@ fn genome(record: Json<Record>) -> Result<NamedFile, GenapiError> {
     writers::write_down_migration(&rec);
     writers::write_up_migration(&rec);
     writers::write_models(&rec);
+    writers::write_endpoints(&rec);
 
     //     let epis: Epis = Epis {
     //         epis: vec!(endpoint.0)

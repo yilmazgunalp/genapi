@@ -29,6 +29,42 @@ use serde::*;
 
 ";
 
+pub const ENDPOINTS_TEMPLATE: &'static str = "use diesel::prelude::*;
+use crate::schema::{{name}}s;
+use crate::models::*;
+use crate::db;
+use rocket::State;
+use rocket_contrib::json::Json;
+
+   genapi_macro::get_endpoint!(Record {
+     name: \"{{name}}\", 
+     fields: [ {{#fields}} 
+    Field {
+      name: \"{{name}}\",
+      typ: \"{{typ}}\",
+    },
+        {{/fields}}],});\n
+
+ genapi_macro::post_endpoint!(Record {
+  name: \"{{name}}\", 
+  fields: [ {{#fields}} 
+ Field {
+   name: \"{{name}}\",
+   typ: \"{{typ}}\",
+ },
+     {{/fields}}],});\n
+
+genapi_macro::delete_endpoint!(Record {
+  name: \"{{name}}\", 
+  fields: [ {{#fields}} 
+ Field {
+   name: \"{{name}}\",
+   typ: \"{{typ}}\",
+ },
+     {{/fields}}],});\n
+
+";
+
 /*  Check what can be done with ramhorns like using expressions
 otherwise in order to use mustache I need to create another data type which can be used instead
 to write things like String, bool ...*/

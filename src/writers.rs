@@ -41,6 +41,15 @@ pub fn write_models(record: &Record) -> Result<(), GenapiError> {
     Ok(())
 }
 
+pub fn write_endpoints(record: &Record) -> Result<(), GenapiError> {
+    let source = ENDPOINTS_TEMPLATE;
+    let tpl = Template::new(source).unwrap();
+    let rendered = tpl.render(record);
+    let (mut tmp_file, _tmp_file_path) = create_tmp_file("/src/endpoints.rs")?;
+    tmp_file.write(&rendered.as_bytes())?;
+    Ok(())
+}
+
 pub fn create_tmp_file(filename: &str) -> Result<(File, OsString), GenapiError> {
     let tmp_file_path: OsString =
         OsString::from(format!("/home/yg/ygprojects/genapi/output_api{}", filename));
