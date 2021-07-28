@@ -63,6 +63,15 @@ genapi_macro::delete_endpoint!(Record {
  },
      {{/fields}}],});\n
 
+genapi_macro::put_endpoint!(Record {
+  name: \"{{name}}\", 
+  fields: [ {{#fields}} 
+ Field {
+   name: \"{{name}}\",
+   typ: \"{{typ}}\",
+ },
+     {{/fields}}],});\n
+
 ";
 
 /*  Check what can be done with ramhorns like using expressions

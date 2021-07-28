@@ -53,7 +53,7 @@ pub fn write_endpoints(record: &Record) -> Result<(), GenapiError> {
 pub fn create_tmp_file(filename: &str) -> Result<(File, OsString), GenapiError> {
     let tmp_file_path: OsString =
         OsString::from(format!("/home/yg/ygprojects/genapi/output_api{}", filename));
-    let mut tmp_file: File = File::create(&tmp_file_path).expect("Failed at creating tmp file!");
+    let tmp_file: File = File::create(&tmp_file_path).expect("Failed at creating tmp file!");
 
     Ok((tmp_file, tmp_file_path))
 }
