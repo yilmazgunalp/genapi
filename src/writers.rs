@@ -2,12 +2,10 @@ use std::{
     ffi::OsString,
     fs::{DirBuilder, File, OpenOptions},
     io::Write,
-    time::SystemTime,
 };
 
-use ramhorns::{Content, Template};
+use ramhorns::Template;
 
-use crate::record::Field;
 use crate::templates::*;
 use crate::{compile::GenapiError, record::Record};
 
@@ -79,7 +77,6 @@ pub fn create_tmp_file(filename: &str, dir: Option<&str>) -> Result<(File, OsStr
         },
         None => OsString::from(format!("/home/yg/ygprojects/genapi/output_api{}", filename)),
     };
-    println!("{:?}", tmp_file_path);
     let tmp_file: File = OpenOptions::new()
         .write(true)
         .create(true)

@@ -1,6 +1,5 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 mod compile;
-use ramhorns::{Content, Template};
 
 use rocket_contrib::json::Json;
 use std::{ffi::OsString, time::SystemTime};
@@ -8,7 +7,7 @@ use std::{ffi::OsString, time::SystemTime};
 extern crate rocket;
 #[macro_use]
 extern crate serde_derive;
-use rocket::response::status::NotFound;
+
 use rocket::response::NamedFile;
 
 use compile::compile_api;
@@ -17,7 +16,7 @@ use compile::GenapiError;
 mod record;
 mod templates;
 mod writers;
-use record::{Field, Record};
+use record::Record;
 mod utils;
 
 #[post("/api/gen", data = "<record>")]
@@ -29,7 +28,6 @@ fn genome(record: Json<Record>) -> Result<NamedFile, GenapiError> {
         .unwrap()
         .as_secs();
     let dir = format!("{}_create", now);
-    println!("{}", dir);
 
     writers::write_schema(&rec);
     writers::write_down_migration(&rec, &dir);

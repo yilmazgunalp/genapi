@@ -1,16 +1,10 @@
-use std::env;
 use std::ffi::OsString;
 use std::fmt;
-use std::fs;
-use std::fs::File;
+
 use std::io::{Error, ErrorKind};
-// use std::path::PathBuf;
 use std::process::Command;
-// use std::error::Error;
 
 pub fn compile_api(path: &OsString) -> Result<(), GenapiError> {
-    // get the current dir
-    let x = env::current_dir().unwrap().into_os_string();
     let output_binary_path: OsString = OsString::from("/home/yg/ygprojects/genapi/output_binary/");
     // build the rocket api at the given path
     let status = Command::new("cargo")
